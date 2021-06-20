@@ -10,7 +10,7 @@ var budgetController = (function(){
 
 })();
 
-var controller = (function(budgetCtrl,UICtrl){
+var controller = (function(UICtrl,budgetCtrl){
 
     
 
