@@ -34,7 +34,21 @@ var budgetController = (function(){
 
 var controller = (function(UICtrl,budgetCtrl){
 
-    var DOM = UICtrl.getDOMStrings();
+
+    var eventListenerSetup = function(){
+
+        var DOM = UICtrl.getDOMStrings();
+
+        document.querySelector(DOM.addBtn).addEventListener('click',addItem);
+
+        document.addEventListener('keypress',function(event){
+            if(event.key=='Enter'){
+                addItem();
+            };
+        });
+
+    }
+
     var addItem = function(){
 
         // get the inout data
@@ -47,14 +61,18 @@ var controller = (function(UICtrl,budgetCtrl){
         // calculate the budget 
         // display budget on UI 
 
-    }
+    };
 
-    document.querySelector(DOM.addBtn).addEventListener('click',addItem);
+    return {
+        init : function(){
+            console.log('the app has been initialized !');
+            eventListenerSetup();
+        }
+    };
+
     
-    document.addEventListener('keypress',function(event){
-        if(event.key=='Enter'){
-            addItem();
-        };
-    });
+    
 
 })(UIController,budgetController);
+
+controller.init();
