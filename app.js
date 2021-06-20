@@ -4,7 +4,9 @@ var UIController = (function(){
         typeField : '.add__type',
         descriptionField : '.add__description',
         valueField : '.add__value',
-        addBtn : '.add__btn'
+        addBtn : '.add__btn',
+        incomeContainer : '.income__list',
+        expensesContainer : '.expenses__list'
     }
 
     return {
@@ -17,6 +19,28 @@ var UIController = (function(){
             }
             
     
+        },
+        listItemAdder : function(obj,type){
+            var html, newHtml, element;
+
+            if (type === 'exp'){
+                element = DOMStrings.expensesContainer;
+                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+
+            }else if(type === 'inc'){
+
+                element = DOMStrings.incomeContainer;
+
+                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">+ %value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+
+            }
+
+            newHtml = html.replace('%id%',obj.ID);
+            newHtml = newHtml.replace('%description%',obj.description);
+            newHtml = newHtml.replace('%value%',obj.value);
+
+            document.querySelector(element).insertAdjacentHTML('beforeend',newHtml)
+
         },
         getDOMStrings : function(){
             return DOMStrings;
@@ -104,8 +128,10 @@ var controller = (function(UICtrl,budgetCtrl){
         console.log(inputData);
 
         //add the item to budget controller 
-        budgetController.addItem(inputData.type,inputData.description,inputData.value);
+        var addedItem = budgetController.addItem(inputData.type,inputData.description,inputData.value);
         //add the item to ui 
+
+        UICtrl.listItemAdder(addedItem , inputData.type);
         // calculate the budget 
         // display budget on UI 
 
